@@ -9,14 +9,12 @@ namespace api.Data
     public DataContext(DbContextOptions<DataContext> options)
       : base(options) { }
 
-    public DbSet<Anime> Animes { get; set; }
     public DbSet<AnimeList> AnimeLists { get; set; }
     public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.ApplyConfiguration(new UserMap());
-      modelBuilder.ApplyConfiguration(new AnimeMap());
       modelBuilder.ApplyConfiguration(new AnimeListMap());
     }
   }

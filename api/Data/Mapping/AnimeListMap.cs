@@ -9,7 +9,7 @@ namespace api.Data.Mapping
   {
     public void Configure(EntityTypeBuilder<AnimeList> builder)
     {
-      builder.Property(u => u.CreatedDate).HasDefaultValue(DateTime.Now);
+      builder.Property(u => u.CreatedDate).HasDefaultValue(DateTime.UtcNow);
       builder.HasOne(u => u.User).WithMany(a => a.AnimeLists);
     }
   }

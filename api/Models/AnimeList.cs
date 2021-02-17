@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using api.Data.Interfaces;
 
 namespace api.Models
@@ -10,7 +11,10 @@ namespace api.Models
     public ICollection<Anime> Animes { get; set; }
     public int UserId { get; set; }
     public User User { get; set; }
+
+    [JsonIgnore]
     public DateTime CreatedDate { get; set; }
+    [JsonIgnore]
     public DateTime UpdatedData { get; set; }
   }
 }

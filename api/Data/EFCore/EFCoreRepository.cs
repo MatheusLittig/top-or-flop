@@ -1,62 +1,83 @@
-using System.Collections.Generic;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
-using api.Data.Interfaces;
 using api.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace api.Data.EFCore
 {
-  public abstract class EfCoreRepository<TEntity, TContext> : IRepository<TEntity>
-    where TEntity : class, IEntity
-    where TContext : DbContext
+  public class EFCoreRepository<TEntity> : IRepository<TEntity>
+    where TEntity : class, new()
   {
-    private readonly TContext context;
+    protected DataContext Context;
 
-    public EfCoreRepository(TContext context)
+    public EFCoreRepository(DataContext context)
     {
-      this.context = context;
+      this.Context = context;
     }
 
-    public async Task<TEntity> Add(TEntity entity)
+    public IQueryable<TEntity> GetAll()
     {
-      context.Set<TEntity>().Add(entity);
-
-      await context.SaveChangesAsync();
-
-      return entity;
+      try
+      {
+        return Context.Set<TEntity>();
+      }
+      catch (Exception ex)
+      {
+        throw new Exception($"Couldn't retrieve entities: {ex.Message}");
+      }
     }
 
-    public async Task<TEntity> Delete(int id)
+    public async Task<TEntity> AddAsync(TEntity entity)
     {
-      var entity = await context.Set<TEntity>().FindAsync(id);
+      if (entity == null)
+      {
+        throw new ArgumentException($"{nameof(AddAsync)} entity must be not null");
+      }
+
+      try
+      {
+        await Context.AddAsync(entity);
+        await Context.SaveChangesAsync();
+
+        return entity;
+      }
+      catch (Exception ex)
+      {
+        throw new Exception($"{nameof(entity)} could not be saved: {ex.Message}");
+      }
+    }
+
+    public async Task<TEntity> UpdateAsync(TEntity entity)
+    {
+      if (entity == null)
+      {
+        throw new ArgumentNullException($"{nameof(UpdateAsync)} entity must not be null");
+      }
+
+      try
+      {
+        Context.Update(entity);
+        await Context.SaveChangesAsync();
+
+        return entity;
+      }
+      catch (Exception ex)
+      {
+        throw new Exception($"{nameof(entity)} could not be updated: {ex.Message}");
+      }
+    }
+
+    public async Task<TEntity> DeleteAsync(int id)
+    {
+      var entity = await Context.Set<TEntity>().FindAsync(id);
 
       if (entity == null)
       {
-        return entity;
+        throw new ArgumentNullException($"{nameof(DeleteAsync)} entity must not be null");
       }
 
-      context.Set<TEntity>().Remove(entity);
-
-      await context.SaveChangesAsync();
-
-      return entity;
-    }
-
-    public async Task<TEntity> Get(int id)
-    {
-      return await context.Set<TEntity>().FindAsync(id);
-    }
-
-    public async Task<List<TEntity>> GetAll()
-    {
-      return await context.Set<TEntity>().ToListAsync();
-    }
-
-    public async Task<TEntity> Update(TEntity entity)
-    {
-      context.Entry(entity).State = EntityState.Modified;
-
-      await context.SaveChangesAsync();
+      Context.Remove(entity);
+      await Context.SaveChangesAsync();
 
       return entity;
     }

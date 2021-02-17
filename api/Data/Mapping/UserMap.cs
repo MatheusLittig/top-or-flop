@@ -9,7 +9,7 @@ namespace api.Data.Mapping
   {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-      builder.Property(u => u.CreatedDate).HasDefaultValue(DateTime.Now);
+      builder.Property(u => u.CreatedDate).HasDefaultValue(DateTime.UtcNow);
     }
   }
 }

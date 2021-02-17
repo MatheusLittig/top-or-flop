@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using api.Data.Interfaces;
 
 namespace api.Models
@@ -14,7 +15,11 @@ namespace api.Models
     public List<AnimeList> AnimeLists { get; set; }
     public int Wins { get; set; }
     public int Loses { get; set; }
+
+    [JsonIgnore]
     public DateTime CreatedDate { get; set; }
+
+    [JsonIgnore]
     public DateTime UpdatedData { get; set; }
   }
 }
