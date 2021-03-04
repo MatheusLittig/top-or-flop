@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/top-flop-logo.png" height="80%" width="80%" alt="TopOrFlop" />
+  <img src="./public/top-flop-logo.png" height="30%" width="30%" alt="TopOrFlop" />
 </p>
 
 # Top or Flop
