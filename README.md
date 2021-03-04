@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./public/top-flop-logo.png" height="80%" width="80%" alt="TopOrFlop" />
+</p>
+
 # Top or Flop
 ### Your seasonal most hyped animeList
 
@@ -13,19 +17,19 @@ Top or Flop is a personalized anime-list where you can add your main titles of t
 
 Dillinger uses a number of open source projects to work properly:
 
-_Frontend_
+Frontend
 - **[NextJS]** - React structure.
 - **[RecoilJS]** - State Library.
 - **[SWR]** - Api hooks requisitions.
 - **[ChakraUI]** - User interface and animations.
 
-_Backend_
+Backend
 - **[ASP.NET CORE]** - API Rest.
 - **[Swagger]** - API Documentation.
 - **[PostgresQL]** - Main database.
 - **[JWT]** - User authentication.
 
-_UI/UX_
+UI/UX
 - Figma - [Access Here](https://www.figma.com/file/S2RRSHQ21lJH9f6rclspzC/Anime-Bingo?node-id=0%3A1) 
 
 ## Authors
