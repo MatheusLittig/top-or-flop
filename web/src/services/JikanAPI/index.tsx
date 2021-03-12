@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { useCallback } from 'react'
 import { Season, Anime } from './interfaces'
 
 export const jikanAPI = axios.create({
